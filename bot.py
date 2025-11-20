@@ -48,7 +48,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Создаем кнопки клавиатуры
     keyboard = [
         [KeyboardButton("О нас"), KeyboardButton("Кейсы")],
-        [KeyboardButton("👤 Руководитель")]
+        [KeyboardButton("👤 Руководитель"), KeyboardButton("📞 Номер телефона")]
     ]
     reply_markup = ReplyKeyboardMarkup(
         keyboard,
@@ -224,11 +224,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 f"{caption}\n\n⚠️ _Фото временно недоступно_",
                 parse_mode='Markdown'
             )
+    elif text == "📞 Номер телефона":
+        database.log_action(user.id, 'button_phone')
+        await update.message.reply_text(
+            "📞 *Наш контактный номер телефона:*\n\n"
+            "`88005553535351312`\n\n"
+            "Звоните в любое время! Мы работаем 24/7 🕐",
+            parse_mode='Markdown'
+        )
     elif text == "⬅️ Назад в меню":
         # Возвращаем основное меню
         keyboard = [
             [KeyboardButton("О нас"), KeyboardButton("Кейсы")],
-            [KeyboardButton("👤 Руководитель")]
+            [KeyboardButton("👤 Руководитель"), KeyboardButton("📞 Номер телефона")]
         ]
         reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
         await update.message.reply_text(
@@ -325,7 +333,7 @@ async def receive_phone(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     # Благодарим пользователя
     keyboard = [
         [KeyboardButton("О нас"), KeyboardButton("Кейсы")],
-        [KeyboardButton("👤 Руководитель")]
+        [KeyboardButton("👤 Руководитель"), KeyboardButton("📞 Номер телефона")]
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     
@@ -345,7 +353,7 @@ async def cancel_application(update: Update, context: ContextTypes.DEFAULT_TYPE)
     """Отмена оформления заявки"""
     keyboard = [
         [KeyboardButton("О нас"), KeyboardButton("Кейсы")],
-        [KeyboardButton("👤 Руководитель")]
+        [KeyboardButton("👤 Руководитель"), KeyboardButton("📞 Номер телефона")]
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     
